@@ -5,7 +5,11 @@ const FORM_DATA_KEY = "addUserFormData";
 /**
  * Save an arbitrary object to localStorage under FORM_DATA_KEY.
  */
-export function saveFormData(data: Record<string, any>): void {
+export interface StoredFormData {
+  [key: string]: string; // each value is a string
+}
+
+export function saveFormData(data: StoredFormData): void {
   try {
     localStorage.setItem(FORM_DATA_KEY, JSON.stringify(data));
   } catch {
@@ -17,7 +21,7 @@ export function saveFormData(data: Record<string, any>): void {
  * Load the saved form data (if any) from localStorage.
  * Returns null if nothing is saved or JSON.parse fails.
  */
-export function loadFormData(): Record<string, any> | null {
+export function loadFormData(): StoredFormData | null {
   try {
     const raw = localStorage.getItem(FORM_DATA_KEY);
     if (!raw) return null;
